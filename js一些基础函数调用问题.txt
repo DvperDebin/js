@@ -1,0 +1,97 @@
+//函数变量的作用域
+function fn() {
+    var str = 'this is a string';  //这是一个局部变量
+    console.log(str);		 // 所以这里调用这个变量没有任何问题
+}	
+
+fn();   	// 调用函数 输出this is a string
+console.log(str);             // 但是这里调用这个变量就不可以，因为超出了作用域，所以会出现error
+
+
+// 函数内部的变量不用var定义，会导致这个变量变为全局变量，但是这个方法不要使用，因为定义全局变量也很简单...
+function fn() {
+    str = 'this is a string';    // 函数内部的变量没有var 关键字定义，变为了全局变量
+    console.log(str);		// 控制台输出str，没有任何问题
+}
+	
+fn();			// 调用函数，输出 this is a string
+console.log(str);	// 因为现在str是全局变量，所以这里也不会出现error，反而可以正常输出 this is a string
+
+
+
+//函数内部声明提前；就是先输出再定义。
+function fn() {
+    console.log(str);              // 这里不会发生error，这属于声明提前，先输出再定义。
+    var str = 'this is a string';  // 这里进行了定义和赋值
+    console.log(str);		  // 控制台正确输出str 
+}	
+fn()	 // 因为声明提前，所以对于第一个console.log(str)来说，会打印一个undefined，第二个console.log(str)会正常打印this is a string
+
+
+//全局变量与局部变量名相同时
+var str = 'this is a string not in function'; //这是一个全局变量，整个文档都可以调用
+function fn() {
+    console.log(str);  //这里是声明提前，所以输出undefined
+    var str = 'this is another string in function';  // 这里函数内部的变量与全局变量重名了
+    console.log(str);  // 这里调用的是函数内部的局部变量
+}
+fn();
+console.log(str);  // 这里实际上调用的是函数外部的全局变量
+
+
+
+// 函数实参调用全局变量
+var str =100;
+function fn(str) {  // 2. 其实就是fn(100)
+    console.log(str); // 所以这里控制台输出就是100
+    str = str-10;       //这里就是str = 100-10 = 90
+    console.log(str);   // 输出90
+}
+fn(str); // 1.调用函数，实际参数是全局变量str，str的值是100。
+
+console.log(str);   // 这里调用全局变量str = 100
+
+
+
+// 函数实参是一个实际值
+function fn(num) {   // 其实就是fn(100)
+    console.log(num);  // 所以就是控制台输出 100
+    var num = num;      // 重新定义变量赋值num
+    console.log(num);  // 所以还是100
+    num = num -10;   // 现在num = 100-10 = 90
+    console.log(num);  // 输出90
+}
+fn(100)
+
+
+//调用函数时，没有给予参数值
+var str = 'this is a string';
+
+function fn() {
+    console.log(str);   // 注意，一开始本以为会调用全局变量，但是！最后调用函数的时候，里面并没有参数！所以应该是undefined
+
+    var str = 'this is an another string in function';
+    console.log(str);  // 这里调用函数内部的局部变量 输出 this is an another string in function
+
+}
+
+fn()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
