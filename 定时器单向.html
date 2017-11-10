@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>向下滑动</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+        #show {
+            width: 200px;
+            /* 高度为 0 */
+            height: 400px;
+            background-color: lightcoral;
+            margin: 0 auto;
+            /* 设置为隐藏 */
+            /*display: none;*/
+        }
+
+    </style>
+</head>
+<body>
+<div id="show"></div>
+<script>
+/*
+    // 取得div
+    var div = document.getElementById('show');
+    // 设置一个定时器，动态上浮
+    var time = setInterval(function () {
+        //得到当前有效样式
+        var style = window.getComputedStyle(div,null);
+        // 得到高
+        var height = parseInt(style.height);
+        if(height <= 0){
+            clearInterval(time);
+        } else{
+            height --;  // 设置每次上浮的幅度
+            // 重新设置高
+            div.style.height = height + 'px';
+        }
+    },30)
+*/
+
+
+    function slideDown(element,minHeight,speed) {
+       /* element.style.height = window.getComputedStyle(element,null);*/
+        element.style.display = 'block';
+        var time = setInterval(function () {
+            //得到当前有效样式
+            var style = window.getComputedStyle(element,null);
+            // 得到高
+            var height = parseInt(style.height);
+            if(height <= minHeight || height <= 0){
+                clearInterval(time);
+            } else{
+                height --;  // 设置每次上浮的幅度
+                // 重新设置高
+                div.style.height = height + 'px';
+            }
+        },speed)
+    }
+    var div = document.getElementById('show');
+    slideDown(div, -100, 10);
+</script>
+</body>
+</html>

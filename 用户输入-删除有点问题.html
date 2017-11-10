@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>动态操作表格</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="DOMTOOL1.0.js"></script>
+    <style>
+        body {
+            padding: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>name: </label>
+            <input type="text" class="form-control" id="name">
+        </div>
+        <div class="form-group">
+            <label>email: </label>
+            <input type="text" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+            <label>salary: </label>
+            <input type="text" class="form-control" id="salary">
+        </div>
+        <button id="add" class="btn btn-default">Submit</button>
+    </div>
+    <div class="col-md-8">
+        <table id="data" class="table table-striped table-hover ">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Salary</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>King</td>
+                <td>king@qq.com</td>
+                <td>80000</td>
+                <td><button name="delete" class="btn btn-danger btn-xs">删除</button></td>
+            </tr>
+            <tr>
+                <td>Jerry</td>
+                <td>jerry@qq.com</td>
+                <td>8000</td>
+                <td><button name="delete" class="btn btn-danger btn-xs">删除</button></td>
+            </tr>
+            <tr>
+                <td>Tom</td>
+                <td>tom@qq.com</td>
+                <td>10000</td>
+                <td><button name="delete" class="btn btn-danger btn-xs">删除</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    // 动态添加数据
+    // 先定位
+    var submit = document.getElementById('add');
+    submit.onclick = function () { // 绑定事件
+        // 再定位
+        var name = document.getElementById('name');
+        var email = document.getElementById('email');
+        var salary = document.getElementById('salary');
+        // 读取输入内容,value可以返回文本域的值
+        var nameContent = name.value;
+        var emailContent = email.value;
+        var salaryContent = salary.value;
+        // 在tbody中创造新的行, 先定位到tBody
+        var tBody = document.getElementsByTagName('tbody')[0];
+        // 创造新的行
+        var row = document.createElement('tr');
+        // 利用innerHTML添加内容
+        row.innerHTML = '<td>' + nameContent + '</td>'+
+                        '<td>' + emailContent + '</td>'+
+                        '<td>' + salaryContent + '</td>'+
+                        '<td><button name="delete" class="btn btn-danger btn-xs">删除</button></td>';
+        tBody.appendChild(row);
+
+        var remove = document.getElementsByName('delete');
+        for(var i = 0; i <remove.length; i++){   // 对每个btn都设置点击事件
+            remove[i].onclick = function () {  // 点击事件
+                var parent = remove[0].parentNode.parentNode.parentNode;  // 因为我们要删除行，所以要先找到行的parent
+                var tr = childNodes(parent);   // 要用childrennodes得到所有的不包含空白节点的tr节点
+                parent.removeChild(tr[0]);  // 每次都要删除当前行，即为第一行
+            }
+
+        }
+    }
+    // 动态删除, 先定位
+    var remove = document.getElementsByName('delete');
+    for(var i = 0; i <remove.length; i++){   // 对每个btn都设置点击事件
+        remove[i].onclick = function () {  // 点击事件
+            var parent = remove[0].parentNode.parentNode.parentNode;  // 因为我们要删除行，所以要先找到行的parent
+            var tr = childNodes(parent);   // 要用childrennodes得到所有的不包含空白节点的tr节点
+            parent.removeChild(tr[0]);  // 每次都要删除当前行，即为第一行
+        }
+
+    }
+
+</script>
+</html>

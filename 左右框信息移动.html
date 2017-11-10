@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>动态左右移动效果</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        body {
+            padding: 100px;
+        }
+        select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="col-md-4">
+        <select id="first" size="10" multiple>
+            <option>Argentina</option>
+            <option>Brazil</option>
+            <option>Canada</option>
+            <option>Chile</option>
+            <option>China</option>
+            <option>Cuba</option>
+            <option>Denmark</option>
+            <option>Egypt</option>
+            <option>France</option>
+            <option>Greece</option>
+            <option>Spain</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <p><button id="add" class="btn btn-primary btn-block">&gt;</button></p>
+        <p><button id="add_all" class="btn btn-primary btn-block">&gt;&gt;</button></p>
+        <p><button id="remove" class="btn btn-primary btn-block">&lt;</button></p>
+        <p><button id="remove_all" class="btn btn-primary btn-block">&lt;&lt;</button></p>
+    </div>
+    <div class="col-md-4">
+        <select id="second" size="10" multiple></select>
+    </div>
+</div>
+</body>
+<script>
+    // 先定位
+    var add = document.getElementById('add');
+    // 找到左右两个下拉菜单
+    var left = document.getElementById('first');
+    var right = document.getElementById('second');
+    // 绑定事件
+    add.onclick = function () {
+        // 找到左边下拉菜单中的option
+        var opts = left.getElementsByTagName('option');
+        // 遍历一下这个option
+        var len = opts.length;  // 固定长度
+        for(var i = 0; i < len; i++){
+            // 如果被选中
+            if(opts[i].selected){
+                // 就移到右边
+                right.appendChild(opts[i]);
+                i--;  // 永远读取第一个
+            }
+        }
+    }
+    // 双击移动到右方
+    var first = document.getElementById('first');
+    first.ondblclick = function () {
+       var  opts = left.getElementsByTagName('option');
+       var len = opts.length;
+       for(var i = 0; i < len; i++){
+        if(opts[i].selected){
+            right.appendChild(opts[i]);
+            i--;
+        }
+       }
+    }
+    // 把所有的移到右边
+    var addAll = document.getElementById('add_all');
+    addAll.onclick = function () {
+        // 把左边整个下拉菜单放到右边去
+        // 先定位下拉菜单
+        var first = document.getElementById('first');
+        // 找到所有左边下拉菜单下方的选项
+        var select1 = first.getElementsByTagName('option');
+        // 固定长度用
+        var len = select1.length;
+        // 遍历
+        for(var i = 0; i < len; i++){
+            // 把遍历的所有的左边的下拉菜单的内容放到右边
+            right.appendChild(select1[i]);
+            i--;
+        }
+    }
+    // 把右边的内容放到左边
+    // 先定位
+    var remove = document.getElementById('remove');
+    // 绑定事件
+    remove.onclick = function () {
+        // 获取所有右边的选项
+        var ropts = right.getElementsByTagName('option');
+        // 定宽，为了解决动态问题
+        var len = ropts.length;
+        // 遍历
+        for(var i = 0; i < len; i++){
+            if(ropts[i].selected){
+                // 如果被选中了就放到左边去
+                left.appendChild(ropts[i]);
+                i--;  // 永远读取第一个，也是解决动态问题
+            }
+        }
+    }
+    // 把右边的全部内容放到左边
+    // 先定位
+    var removeAll = document.getElementById('remove_all');
+    // 绑定事件
+    removeAll.onclick = function () {
+        // 获取所有的选项
+        var ropts = right.getElementsByTagName('option');
+        // 定宽
+        var len = ropts.length
+        // 遍历
+        for(var i = 0; i < len; i++){
+            // 这里不用再判断是否被选中了，因为是把所有的选项都放到左边
+            left.appendChild(ropts[i]);
+            i--;  // 永远读取第一个，解决动态问题
+        }
+    }
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

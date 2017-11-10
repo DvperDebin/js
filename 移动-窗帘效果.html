@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>向下滑动</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+        #show {
+            width: 200px;
+            /* 高度为 0 */
+            height: 0px;
+            background-color: lightcoral;
+            margin: 0 auto;
+            /* 设置为隐藏 */
+            /*display: none;*/
+        }
+
+    </style>
+</head>
+<body>
+<div id="show"></div>
+<script>
+    // 盒子先往下走，然后再回去
+    // 先取到盒子
+/*    var box = document.getElementById('show');*/
+/*    // 设置一个开关
+    var flag = false;  // 假定false是往下
+    // 设置一个定时器
+    var time = setInterval(function () {
+        // 得到当前有效样式
+        var style = window.getComputedStyle(box,null);
+        // 得到高度
+        var height = parseInt(style.height);
+        // 到400这个高度的时候往上走
+        if(height === 400){
+            flag = true; // false是向下走，true就是往上走
+        }else if(height === 0){
+             flag = false;  // 高度为0的时候，就再往下走
+        }
+        if(flag){
+            height = height - 1
+        }else{
+            // 高度每30ms增加1
+            height  = height + 1;
+        }
+        // 利用内联样式优先级高于外联样式设置回height
+        box.style.height = height + 'px';
+    },30)*/
+
+
+
+        /*var flag = false;*/
+        var box = document.getElementById('show');
+        function slideDownUp(element,maxHeight,speed) {
+            element.style.display = 'block';
+            var time = setInterval(function () {
+                var style = window.getComputedStyle(element,null);
+                var height = parseInt(style.height);
+                if(height === maxHeight){
+                    flag = true;
+                }else if(height === 0){
+                    flag = false;
+                }
+                if(flag){
+                    height = height - 1
+                }else{
+                    height  = height + 1;
+                }
+                element.style.height = height + 'px';
+            },speed)
+        }
+
+    slideDownUp(box, 100, 10)
+</script>
+</body>
+</html>

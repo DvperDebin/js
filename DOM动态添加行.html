@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>动态为表格添加数据</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="DOMTOOL1.0.js"></script>
+    <style>
+        body {
+            padding: 100px;
+
+        }
+        #remove{
+            width: 68px;
+            height: 43px;
+            background-color: #2780e3;
+            color: white;
+            border: none;
+            transform: translateY(5%);;
+        }
+    </style>
+</head>
+<body>
+<button id="add" class="btn btn-primary">添加</button>
+<button id="remove">删除</button>
+<table id="data" class="table table-striped table-hover ">
+    <thead>
+    <tr>
+        <th>Column heading</th>
+        <th>Column heading</th>
+        <th>Column heading</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Column content</td>
+        <td>Column content</td>
+        <td>Column content</td>
+    </tr>
+    <tr>
+        <td>Column content</td>
+        <td>Column content</td>
+        <td>Column content</td>
+    </tr>
+    <tr>
+        <td>Column content</td>
+        <td>Column content</td>
+        <td>Column content</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script>
+    var tBody = document.getElementsByTagName('tbody')[0];
+        // 先定位到button
+    var btn = document.getElementById('add');
+    // 给button绑定一个点击事件
+    btn.onclick = function () {
+        // 其实就是每点击一次，就在tbody中创造tr, 但是我们要先找到特定的table
+        var table = document.getElementById('data');
+       // 先创建tr
+        var tr = document.createElement('tr');
+    //第一个单元格    // 再创建td
+        var td1 = document.createElement('td');
+        // 创建文字内容
+        var text1 = document.createTextNode('这是新建的');
+        // 把文字放入td中
+        td1.appendChild(text1);
+        // 把td放入tr中
+        tr.appendChild(td1);
+    // 第二个单元格
+        var td2 = document.createElement('td');
+        var text2 = document.createTextNode('这是新建的');
+        td2.appendChild(text2);
+        tr.appendChild(td2);
+    // 第三个单元格
+        var td3 = document.createElement('td');
+        var text3 = document.createTextNode('这是新建的');
+        td3.appendChild(text3);
+        tr.appendChild(td3);
+        // 最后把tr放入tbody中
+        tBody.appendChild(tr);
+
+        // 这是让生成的新的行也会有隔行变色的效果
+        var row = tBody.getElementsByTagName('tr');
+        for(var i = 0; i < row.length; i++){
+            if( i % 2 === 0 ){
+                row[i].setAttribute('style','background-color:#ddd');
+            }
+        }
+
+    }
+    // 每隔一行换一个颜色，其实就是在tbody中第2,4,6,8....行换色
+
+
+    // 找到tbody中的行
+    var row = tBody.getElementsByTagName('tr');
+    // 判断是第几行
+    for(var i = 0; i < row.length; i++){
+        if( i % 2 === 0 ){
+            // 偶数行变色
+            row[i].setAttribute('style','background-color:#ddd');
+        }
+    }
+
+    // 点击一下删除一行
+    // 先定位
+    var remove = document.getElementById('remove');
+    // 绑定事件
+    remove.onclick = function () {
+        // 因为需要使用removechild，所以需要使用childnodes
+        var alltr = childNodes(tBody); // 解决空白节点问题.引入我们事先写好的
+        tBody.removeChild(alltr[alltr.length-1]); // 每次删除的都是最后一个
+    }
+</script>
+</html>

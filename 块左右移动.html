@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>移动效果</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: lightcoral;
+
+            position: absolute;
+            left: 0px;
+            top: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+    /*
+     * 向右移动
+     * 当前元素移动到页面的最右边时 -> 向左移动
+     * 向左移动
+     * 当前元素移动到页面的最左边时 -> 向右移动
+     */
+
+    var flag = false;  // 当盒子向右移时为false
+    // 设置初始速度
+    var speed = 5; // 这个初始速度不能放在定时器内部，否则会不停重新定义速度
+    var box = document.getElementById('box');
+    var time = setInterval(function () {
+        // 得到有效样式
+        var style = window.getComputedStyle(box,null);
+        // 得到left
+        var left = parseInt(style.left);
+        // 得到页面宽度
+        var Width = innerWidth;
+        // 得到盒子宽度
+        var width = parseInt(style.width);
+
+        if(left >= Width - width){  // 到了最右边
+            flag = true;   // 就要向左走 因为false为向右，true就是向左
+            speed = speed +5;   // 每到最右边界的时候速度就加5
+        }else if(left <= 0){  // 到了最左边
+            flag = false;  // 改变方向往右走，
+            speed = speed +5;  // 每到最左边界的时候，速度也加5
+        }
+        // 当方向明显之后，如何运动
+        if(flag){  // 如果是向左走，就是－
+            left = left - speed;
+        }else {  // 向右走就是＋
+            left = left + speed;
+        }
+        box.style.left = left + 'px';
+    },30)
+
+    box.onclick = function () {
+        clearInterval(time);
+    }
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

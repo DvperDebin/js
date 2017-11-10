@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态操作元素</title>
+    <script src="DOMTOOL1.0.js"></script>
+    <style>
+        body {
+            margin: 0px;
+        }
+        #box {
+            width: 30px;
+            height: 30px;
+            background-color: lightcoral;
+
+            position: absolute;
+            left: 0px;
+            top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="box"></div>
+<script>
+    // 利用键盘移动盒子
+    var body = document.body;
+
+    // 键盘事件绑定给body，因为我们需要盒子在整个页面移动
+    addeventlistener(body,'keydown',function () {
+        // 事件兼容
+        var eve = event || window.event;
+        if(eve.keyCode === 39){   // 判断是否是右键
+            // 找到盒子
+            var box = document.getElementById('box');
+            // 找到盒子的有效样式
+            var style = window.getComputedStyle(box,null);
+            // 把左距离换成整数
+            var left = parseInt(style.left);
+            // 设置边界
+            var width = window.innerWidth;
+            if(left >= width-35){
+                left = left-10;
+            }
+            // 每次点击移动10像素距离
+            left = left + 10;
+            // 重新设置left距离
+            box.style.left = left + 'px';
+        }else if( eve.keyCode === 37){
+            var box = document.getElementById('box');
+            var style = window.getComputedStyle(box,null);
+            var left = parseInt(style.left);
+            if(left === 0){
+                left = left + 10;
+            }
+            left = left - 10;
+            box.style.left = left + 'px';
+        }else if(eve.keyCode === 38){
+            var box = document.getElementById('box');
+            var style = window.getComputedStyle(box,null);
+            var top = parseInt(style.top);
+            if(top === 0){
+                top = top + 10;
+            }
+            top = top - 10;
+            box.style.top = top + 'px';
+        }else if(eve.keyCode === 40){
+            var box = document.getElementById('box');
+            var style = window.getComputedStyle(box,null);
+            var top = parseInt(style.top);
+            var height = window.innerHeight;
+            if(top >= height-35){
+                top = top - 10;
+            }
+            top = top + 10;
+            box.style.top = top + 'px';
+        }
+    })
+</script>
+</body>
+</html>
